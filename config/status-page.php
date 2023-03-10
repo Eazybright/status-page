@@ -12,11 +12,11 @@ return [
      * 
     */
     'route_filename' => '',
-    
+
     /**
      * Default logo
     */
-    'logo' => '',
+    'logo' => 'vendor/status-page/img/STATUSPAGE.png',
 
     /**
      *Define storage path 

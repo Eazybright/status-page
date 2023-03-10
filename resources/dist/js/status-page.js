@@ -1,7 +1,7 @@
 const maxDays = 30;
 
-async function genReportLog(container, key, url) {
-  const response = await fetch("logs/" + key + "_report.log");
+async function genReportLog(container, key, url, log) {
+  const response = await fetch(log+ "/" + key + "_report.log");
   let statusLines = "";
   if (response.ok) {
     statusLines = await response.text();
@@ -236,8 +236,8 @@ function hideTooltip() {
   }, 1000);
 }
 
-async function genAllReports() {
-  const response = await fetch("urls.cfg");
+async function genAllReports(route, log) {
+  const response = await fetch(route);
   const configText = await response.text();
   const configLines = configText.split("\n");
   for (let ii = 0; ii < configLines.length; ii++) {
@@ -247,6 +247,6 @@ async function genAllReports() {
       continue;
     }
 
-    await genReportLog(document.getElementById("reports"), key, url);
+    await genReportLog(document.getElementById("reports"), key, url, log);
   }
 }

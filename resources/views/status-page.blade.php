@@ -1,14 +1,14 @@
 <html>
   <head>
-    <title>Status Page</title>
+    <title>{{ config('app.name') }} - Status Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="{{ asset("vendor/status-page/css/index.css") }}" />
     <script src="{{ asset("vendor/status-page/js/status-page.js") }}"></script>
   </head>
   <body>
     <div class="pageContainer">
       <div class="headline">
-        <img src="logo.svg" alt="Logo" width="200px" />
+        <img src="{{ asset(config('status-page.logo')) }}" alt="Logo" width="200px" />
         <span> System Status </span>
       </div>
       <div id="reports" class="reportContainer"></div>
@@ -50,6 +50,8 @@
     </footer>
   </body>
   <script>
-    genAllReports();
+    let route = "{{ asset('urls.cfg') }}"
+    let log = "{{ asset('vendor/status-page/logs') }}"
+    genAllReports(route, log);
   </script>
 </html>

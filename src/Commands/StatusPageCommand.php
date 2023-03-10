@@ -7,6 +7,7 @@ use Eazybright\StatusPage\StatusPage;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 class StatusPageCommand extends Command
 {
@@ -14,45 +15,34 @@ class StatusPageCommand extends Command
 
     public $description = 'Create status page';
 
-    public function handle()
+    public function handle(): int
     {
-        $filename = Storage::url('app/urls.cfg');
-        putenv("FILENAME=$filename");
-
-        $this->comment('filename:'.$filename);
+        $filename = public_path('urls.cfg');
         $bashFile = base_path('health-check.sh');
-        $this->comment('bashFile:'.$bashFile);
 
 
-        $process = new Process(['/bin/bash', $bashFile], null, ['FILENAME' =>$filename]);
+        $process = new Process(['bash', $bashFile], null, [
+            'FILENAME' => $filename,
+            'LOG_DIRECTORY' => public_path('/vendor/status-page/logs')
+        ]);
+        $process->setTimeout(3600);
+
         try {
-            $process->mustRun();
-        
-            echo $process->getOutput();
+            $process->run(function ($type, $buffer) {
+                if (Process::ERR === $type) {
+                    $this->error('ERR > '.$buffer);
+                } else {
+                    $this->info('OUT > '.$buffer);
+                }
+            });
         } catch (ProcessFailedException $exception) {
-            echo $exception->getMessage();
+            $this->error($exception->getMessage());
+        }catch(ProcessTimedOutException $exception){
+            $this->error('Process Timeout: '.$exception->getMessage());
         }
-        // $bashFile = dirname(__FILE__.'/health-check.sh');
-        // $process = Process::fromShellCommandline('bash '.$bashFile);
 
-        // $processOutput = '';
+        $this->comment('All done');
 
-        // $captureOutput = function ($type, $line) use (&$processOutput) {
-        //     $processOutput .= $line;
-        // };
-
-        // $process->setTimeout(null)
-        //     ->run($captureOutput);
-
-        // if ($process->getExitCode()) {
-        //     $exception = new \Exception($processOutput);
-        //     report($exception);
-
-        //     throw $exception;
-        // }
-
-        // $this->comment('All done - '.$processOutput);
-
-        // return self::SUCCESS;
+        return self::SUCCESS;
     }
 }

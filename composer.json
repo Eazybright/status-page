@@ -34,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Eazybright\\StatusPage\\": "src",
-            "Eazybright\\StatusPage\\Database\\Factories\\": "database/factories"
+            "Eazybright\\StatusPage\\": "src"
         }
     },
     "autoload-dev": {

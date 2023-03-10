@@ -2,6 +2,8 @@
 
 namespace Eazybright\StatusPage;
 
+define('ROOTPATH', __DIR__);
+
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Eazybright\StatusPage\Commands\StatusPageCommand;
@@ -21,7 +23,8 @@ class StatusPageServiceProvider extends PackageServiceProvider
             ->name('status-page')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_status-page_table')
+            ->hasRoute('web')
+            ->hasAssets()
             ->hasCommands([
                 StatusPageCommand::class,
                 GenerateRouteCommand::class,
