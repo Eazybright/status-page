@@ -21,13 +21,13 @@ class GenerateRouteCommand extends Command
             $method = $value->methods()[0];
             $actionName = $value->getActionName();
 
-            // Remove the controller namespace 
-            $actionName = str_replace("Controllers\\", "", substr($actionName, stripos($actionName, 'Controllers\\')));
+            // Remove the controller namespace
+            $actionName = str_replace('Controllers\\', '', substr($actionName, stripos($actionName, 'Controllers\\')));
 
             // Replace every occurrence of backlash with underscore
-            $actionName = str_replace("\\", "_", $actionName);
+            $actionName = str_replace('\\', '_', $actionName);
 
-            $content = $actionName." ".env('APP_URL')."/". $uri. " ".$method;
+            $content = $actionName.' '.env('APP_URL').'/'.$uri.' '.$method;
             $routes .= $content.PHP_EOL;
         }
 

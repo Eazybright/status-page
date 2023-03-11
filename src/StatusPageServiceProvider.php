@@ -4,11 +4,11 @@ namespace Eazybright\StatusPage;
 
 define('ROOTPATH', __DIR__);
 
+use Eazybright\StatusPage\Commands\CopyBashFileCommand;
+use Eazybright\StatusPage\Commands\GenerateRouteCommand;
+use Eazybright\StatusPage\Commands\StatusPageCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Eazybright\StatusPage\Commands\StatusPageCommand;
-use Eazybright\StatusPage\Commands\GenerateRouteCommand;
-use Eazybright\StatusPage\Commands\CopyBashFileCommand;
 
 class StatusPageServiceProvider extends PackageServiceProvider
 {
@@ -28,7 +28,7 @@ class StatusPageServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 StatusPageCommand::class,
                 GenerateRouteCommand::class,
-                CopyBashFileCommand::class
+                CopyBashFileCommand::class,
             ]);
     }
 }

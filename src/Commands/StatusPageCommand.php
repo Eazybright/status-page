@@ -2,11 +2,11 @@
 
 namespace Eazybright\StatusPage\Commands;
 
-use Illuminate\Console\Command;
 use Exception;
-use Symfony\Component\Process\Process;
+use Illuminate\Console\Command;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
+use Symfony\Component\Process\Process;
 
 class StatusPageCommand extends Command
 {
@@ -25,7 +25,7 @@ class StatusPageCommand extends Command
 
         $process = new Process(['bash', $bashFilePath], null, [
             'FILEPATH' => $routeFilePath,
-            'LOG_DIRECTORY' => public_path('/vendor/status-page/logs')
+            'LOG_DIRECTORY' => public_path('/vendor/status-page/logs'),
         ]);
         $process->setTimeout(3600);
 
@@ -39,7 +39,7 @@ class StatusPageCommand extends Command
             });
         } catch (ProcessFailedException $exception) {
             $this->error($exception->getMessage());
-        }catch(ProcessTimedOutException $exception){
+        } catch(ProcessTimedOutException $exception) {
             $this->error('Process Timeout: '.$exception->getMessage());
         }
 
@@ -50,7 +50,7 @@ class StatusPageCommand extends Command
 
     protected function checkIfFileExist($file)
     {
-        if(!file_exists($file)){
+        if (! file_exists($file)) {
             throw new Exception("$file file does not exist");
         }
     }
