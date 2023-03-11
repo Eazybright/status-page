@@ -78,7 +78,7 @@ Your view is available at localhost:8000/status-page
 4. To automate `step 3`, you can schedule the artisan command `php artisan status-page:create` to run independently inside `app\Console\kernel.php` file.
 
 ```php
-    ...
+    // ...
 
     /**
      * Define the application's command schedule.
@@ -88,10 +88,15 @@ Your view is available at localhost:8000/status-page
      */
     protected function schedule(Schedule $schedule)
     {
-        ...
+        // ...
+        
         $schedule->command('status-page:create')->hourly();
     }
 ```
+
+## How does it work?
+
+The script (`health-check.sh`) runs `curl` on every url in your config (`urls.cfg`) and appends the result of that run to a log file (`public/vendor/status-page/logs`). This log is then pulled dynamically from `status.blade.php` file and displayed in a easily consumable fashion. 
 
 ## Testing
 
