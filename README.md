@@ -50,13 +50,13 @@ php artisan vendor:publish --tag="status-page-views"
 
 Before the you can view the status page, some actions needs to be performed.
 
-1. Copy the bash script to root folder. a `health-check.sh` file will be generated.
+1. Copy the bash script to root folder, `health-check.sh` file will be generated.
 
 ```bash
 php artisan status-page:copy-script
 ```
 
-2. Crawl the routes in the application. This creates a `urls.cfg` file in the public folder. This is where the available urls will be saved to.
+2. Crawl the routes in the application. This creates `urls.cfg` file in the public folder. This is where the available urls will be saved to.
 ```bash
 php artisan status-page:generate-route
 ```
@@ -65,6 +65,7 @@ Optionally, you can include your urls to `urls.cfg` file.
 ```cfg
 Google https://google.com GET
 Statsig https://statsig.com GET
+```
 
 3. Create the status page view.
 ```bash
@@ -73,6 +74,24 @@ php artisan status-page:create
 Your view is available at localhost:8000/status-page
 
 ![Status Page View](https://res.cloudinary.com/eazybright/image/upload/v1678542586/status_page.png)
+
+4. To automate `step 3`, you can schedule the artisan command `php artisan status-page:create` to run independently inside `app\Console\kernel.php` file.
+
+```php
+    ...
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param Schedule $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        ...
+        $schedule->command('status-page:create')->hourly();
+    }
+```
 
 ## Testing
 
