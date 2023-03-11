@@ -8,7 +8,7 @@ class CopyBashFileCommand extends Command
 {
     public $signature = 'status-page:copy-script';
 
-    public $description = 'This command curls all your routes';
+    public $description = 'This command copies the bash script to your root directory.';
 
     public function handle(): int
     {

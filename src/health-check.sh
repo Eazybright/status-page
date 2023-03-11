@@ -6,7 +6,7 @@ KEYSARRAY=()
 URLSARRAY=()
 METHODSARRAY=()
 
-urlsConfig=$FILENAME
+urlsConfig=$FILEPATH
 echo "Reading $urlsConfig"
 while read -r line
 do
@@ -31,6 +31,14 @@ do
 
   for i in 1 2 3 4; 
   do
+    # replace string enclosed with curly brackets in the specified url
+    regex='\{.*\}'
+    while [[ $url =~ $regex ]]; do
+        toreplace=${BASH_REMATCH[0]}
+        url="${url/${toreplace}/$RANDOM}"
+        echo "new url: $url"
+    done
+
     response=$(curl -X $method --write-out '%{http_code}' --silent --output /dev/null $url)
     echo $response
 

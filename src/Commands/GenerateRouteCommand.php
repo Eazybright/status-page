@@ -9,17 +9,26 @@ class GenerateRouteCommand extends Command
 {
     public $signature = 'status-page:generate-route';
 
-    public $description = 'This command curls all your routes';
+    public $description = 'This command crawls all your routes into a file.';
 
     public function handle(Router $route): int
     {
         $r = collect($route->getRoutes());
         $routes = '';
+
         foreach ($r as $value) {
-            if(!str_starts_with($value->uri(), 'api')){
-                $countent = str_replace("\\", "_", $value->getActionName()) ." ".env('APP_URL')."/". $value->uri(). " ".$value->methods()[0];
-                $routes .= $countent.PHP_EOL;
-            }
+            $uri = $value->uri();
+            $method = $value->methods()[0];
+            $actionName = $value->getActionName();
+
+            // Remove the controller namespace 
+            $actionName = str_replace("Controllers\\", "", substr($actionName, stripos($actionName, 'Controllers\\')));
+
+            // Replace every occurrence of backlash with underscore
+            $actionName = str_replace("\\", "_", $actionName);
+
+            $content = $actionName." ".env('APP_URL')."/". $uri. " ".$method;
+            $routes .= $content.PHP_EOL;
         }
 
         file_put_contents(public_path('urls.cfg'), $routes);

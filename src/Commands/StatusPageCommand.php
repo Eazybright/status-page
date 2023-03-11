@@ -3,8 +3,7 @@
 namespace Eazybright\StatusPage\Commands;
 
 use Illuminate\Console\Command;
-use Eazybright\StatusPage\StatusPage;
-use Illuminate\Support\Facades\Storage;
+use Exception;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
@@ -17,12 +16,15 @@ class StatusPageCommand extends Command
 
     public function handle(): int
     {
-        $filename = public_path('urls.cfg');
-        $bashFile = base_path('health-check.sh');
+        $routeFilePath = public_path('urls.cfg');
+        $bashFilePath = base_path('health-check.sh');
 
+        $this->checkIfFileExist($routeFilePath);
 
-        $process = new Process(['bash', $bashFile], null, [
-            'FILENAME' => $filename,
+        $this->checkIfFileExist($bashFilePath);
+
+        $process = new Process(['bash', $bashFilePath], null, [
+            'FILEPATH' => $routeFilePath,
             'LOG_DIRECTORY' => public_path('/vendor/status-page/logs')
         ]);
         $process->setTimeout(3600);
@@ -44,5 +46,12 @@ class StatusPageCommand extends Command
         $this->comment('All done');
 
         return self::SUCCESS;
+    }
+
+    protected function checkIfFileExist($file)
+    {
+        if(!file_exists($file)){
+            throw new Exception("$file file does not exist");
+        }
     }
 }
