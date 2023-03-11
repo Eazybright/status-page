@@ -1,6 +1,6 @@
 {
     "name": "eazybright/status-page",
-    "description": "Status page for all routes in your laravel application",
+    "description": "Status page for your laravel application",
     "keywords": [
         "Eazybright",
         "laravel",
