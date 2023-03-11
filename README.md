@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/eazybright/status-page/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/eazybright/status-page/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/eazybright/status-page.svg?style=flat-square)](https://packagist.org/packages/eazybright/status-page)
 
-How do you tell if your laravel application is up and running or if there's a downtime?. [StatusPage](https://github.com/Eazybright/status-page) helps you communicate realtime status of your application.
+How do you tell if your laravel application is up and running or if there's a downtime? [StatusPage](https://github.com/Eazybright/status-page) helps you communicate realtime status of your application.
 
 ## Installation
 
@@ -89,7 +89,7 @@ Your view is available at localhost:8000/status-page
     protected function schedule(Schedule $schedule)
     {
         // ...
-        
+
         $schedule->command('status-page:create')->hourly();
     }
 ```
