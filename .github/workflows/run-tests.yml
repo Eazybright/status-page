@@ -48,8 +48,4 @@ jobs:
         run: composer show -D
 
       - name: Execute tests
-        run: |
-          mkdir public
-          touch public/urls.cfg
-          touch health-check.sh
-          vendor/bin/pest
+        run: vendor/bin/pest
