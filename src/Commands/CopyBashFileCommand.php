@@ -13,7 +13,7 @@ class CopyBashFileCommand extends Command
     public function handle(): int
     {
         $scriptName = 'health-check.sh';
-        
+
         file_put_contents(base_path('health-check.sh'), file_get_contents(ROOTPATH.'/'.$scriptName));
 
         $this->comment($scriptName.' file copied to your root folder');
