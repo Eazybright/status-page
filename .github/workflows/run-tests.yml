@@ -49,6 +49,7 @@ jobs:
 
       - name: Execute tests
         run: |
+          mkdir public
           touch public/urls.cfg
           touch health-check.sh
           vendor/bin/pest
