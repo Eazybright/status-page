@@ -2,7 +2,7 @@
 
 namespace Eazybright\StatusPage\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Eazybright\StatusPage\StatusPageServiceProvider;
 
@@ -23,5 +23,7 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        File::put(public_path('urls.cfg'));
+        File::put(base_path('health-check.sh'));
     }
 }
