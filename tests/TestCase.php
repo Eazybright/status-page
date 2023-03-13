@@ -23,7 +23,7 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-        File::put(public_path('urls.cfg'));
-        File::put(base_path('health-check.sh'));
+        File::put(public_path('urls.cfg'), 'Url contents');
+        File::put(base_path('health-check.sh'), 'bash script');
     }
 }
