@@ -48,4 +48,7 @@ jobs:
         run: composer show -D
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: |
+          touch public/urls.cfg
+          touch health-check.sh
+          vendor/bin/pest
