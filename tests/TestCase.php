@@ -2,9 +2,9 @@
 
 namespace Eazybright\StatusPage\Tests;
 
-use Eazybright\StatusPage\StatusPageServiceProvider;
 use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Eazybright\StatusPage\StatusPageServiceProvider;
 
 class TestCase extends Orchestra
 {
